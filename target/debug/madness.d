@@ -1,0 +1,1 @@
+/home/keyboard-slayer/Documents/school/secu-apps/lab3/madness/madness/target/debug/madness: /home/keyboard-slayer/Documents/school/secu-apps/lab3/madness/madness/src/cpu.rs /home/keyboard-slayer/Documents/school/secu-apps/lab3/madness/madness/src/main.rs
