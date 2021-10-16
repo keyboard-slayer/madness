@@ -1,10 +1,10 @@
-use std::process::exit;
+use std::process::{exit, Command};
 use std::env;
-use std::ffi::CString; use libc::{fopen, FILE};
+use std::ffi::CString; use libc::{fopen, FILE, fputs, fclose};
 
 #[derive(Debug)]
 pub struct Cpu {
-    ram: [u8; 512],
+    ram: [u8; 2048],
     r: [u64; 10],
     re: u64,
     pc: u64,
@@ -14,11 +14,11 @@ pub struct Cpu {
 impl Cpu {
     pub fn new(code: Vec<u8>) -> Cpu {
         let mut cpu = Cpu {
-            ram: [0; 512],
+            ram: [0; 2048],
             r: [0; 10],
             re: 0,
             pc: 0,
-            sp: 512,
+            sp: 2048,
         };
 
         let mut i: usize = 0;
@@ -95,7 +95,7 @@ impl Cpu {
 
                     match env::var(var) {
                         Ok(data) => self.push_str(data),
-                        Err(_e) => self.push_str(String::from("NONE"))
+                        Err(_e) => self.push_str(String::from(""))
                     }
 
                     self.re = self.sp;
@@ -116,8 +116,71 @@ impl Cpu {
                     self.pc += 1;
                 }
 
+                0x36 => {
+                    self.pc += 1;
+                    let src = self.ram[self.pc as usize];
+                    let s: String;
+
+                    if src == 1 {
+                        s = self.decode_str(self.re);
+                    } 
+                    else {
+                        s = self.decode_str(self.r[self.find_id(src)]);
+                    }
+
+                    let mut cmd = s.split_whitespace();
+
+                    Command::new(cmd.nth(0).unwrap())
+                        .args(cmd)
+                        .spawn()
+                        .expect("");
+
+                    self.pc += 1;
+                }
+
+                0x58 => {
+                    self.pc += 1;
+                    let addr = self.ram[self.pc as usize];
+                    let fp: *mut FILE;
+                    
+                    if addr == 1 {
+                        fp = self.re as *mut FILE;
+                    } else {
+                        fp = self.r[self.find_id(addr)] as *mut FILE;
+                    }
+
+                    unsafe {
+                        fclose(fp);
+                    }
+
+                    self.pc += 1;
+                }
+
                 0x87 => {
-                    /* TODO WRITE */
+                    self.pc += 1;
+                    let addr = self.ram[self.pc as usize];
+                    let src = self.ram[self.pc as usize + 1];
+                    let fp: *mut FILE;
+                    let s: CString;
+
+                    if addr == 1 {
+                        fp = self.re as *mut FILE;
+                    } else {
+                        fp = self.r[self.find_id(addr)] as *mut FILE;
+                    }
+
+                    if src == 1 {
+                        s = CString::new(self.decode_str(self.re)).unwrap();
+                    }
+                    else {
+                        s = CString::new(self.decode_str(self.r[self.find_id(src)])).unwrap();
+                    }
+
+                    unsafe {
+                        fputs(s.as_ptr(), fp);
+                    }
+
+                    self.pc += 2;
                 }
 
                 0x14 => {
@@ -153,7 +216,7 @@ impl Cpu {
                     let p2: u64;
 
                     if s1 == 1 {
-                        p1 = self.re + 1;
+                        p1 = self.re;
                     }
                     else {
                         p1 = self.r[self.find_id(s1)];
@@ -185,7 +248,7 @@ impl Cpu {
 
                 0x21 => {
                     self.pc += 1;
-                    let _dst = self.ram[self.pc as usize];
+                    let dst = self.ram[self.pc as usize];
                     let src = self.ram[self.pc as usize + 1];
 
                     let s: String;
@@ -202,7 +265,13 @@ impl Cpu {
 
                     unsafe {
                         let fp: *mut FILE = fopen(filename.as_ptr(), read.as_ptr());
-                        self.re = fp as u64;
+
+                        if dst == 1 {
+                            self.re = fp as u64;
+                        }
+                        else {
+                            self.r[self.find_id(dst)] = fp as u64;
+                        }
                     }
 
                     self.pc += 2;

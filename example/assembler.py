@@ -54,7 +54,7 @@ if __name__ == "__main__":
 
                 for index, arg in enumerate(line.split()):
                     if arg[0] == "\"":
-                        s = "".join(line.split()[index:])
+                        s = " ".join(line.split()[index:])
                         if s[0] == "\"" and s[-1] == "\"":
                             code += obfuscate_string(s[1:-1])
                             break
@@ -78,3 +78,5 @@ if __name__ == "__main__":
 
     with open("hex.out", "w") as f:
         f.write("let code: Vec<u8> = vec![ %s ];" % (", ".join(["0x%02x" % x for x in code])))
+
+    print(f"The code is {len(code)} byte long")
