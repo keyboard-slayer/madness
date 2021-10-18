@@ -1,2 +1,6 @@
 /target
 example/*.out
+./src/main.rs
+./tools/encryptor/tool.mp3 
+./tools/decryptor/elf.h
+./tools/decryptor/build/

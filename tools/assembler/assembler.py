@@ -72,11 +72,8 @@ if __name__ == "__main__":
                         print(arg)
                         sys.stderr.write("Syntax error\n")
                         exit(1)
-    
-    with open("a.out", "wb") as f:
-        f.write("".join([chr(x) for x in code]).encode())
 
-    with open("hex.out", "w") as f:
-        f.write("let code: Vec<u8> = vec![ %s ];" % (", ".join(["0x%02x" % x for x in code])))
+    with open("./main.rs", "w") as f:
+        f.write("mod cpu;\n\nfn main(){\n    let code: Vec<u8> = vec![ %s ];\n    let mut cpu = cpu::Cpu::new(code);\n    cpu.run();\n}" % (", ".join(["0x%02x" % x for x in code])))
 
     print(f"The code is {len(code)} byte long")
