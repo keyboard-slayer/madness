@@ -10,10 +10,10 @@ python ./tools/assembler/assembler.py $1
 mv main.rs ./src/
 
 echo "[ * ] Compile the source code"
-RUSTFLAGS="-C relocation-model=dynamic-no-pic" cargo build --release 
+RUSTFLAGS="-C relocation-model=dynamic-no-pic" cargo build 
 
 echo "[ * ] Encrypt the binary"
-python ./tools/encryptor/encryptor.py ./target/release/madness 
+python ./tools/encryptor/encryptor.py ./target/debug/madness 
 mv ./code.h ./tools/decryptor/
 
 echo "[ * ] Building the decryptor"
