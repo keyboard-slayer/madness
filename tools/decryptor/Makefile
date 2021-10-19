@@ -21,14 +21,8 @@ CFLAGS += 					\
 	-Werror					\
 	-Wall					\
 	-Wextra					\
-	-ggdb 					\
-	-MD						\
-	-fsanitize=undefined    \
-	-fsanitize=address      \
 
 LDFLAGS += 					\
-	-fsanitize=undefined    \
-	-fsanitize=address
 
 DIRECTORY_GUARD=@mkdir -p $(@D)
 BUILD_DIRECTORY ?= build

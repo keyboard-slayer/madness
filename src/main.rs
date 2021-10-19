@@ -1,0 +1,7 @@
+mod cpu;
+
+fn main(){
+    let code: Vec<u8> = vec![ 0xe8, 0x0a, 0x2b, 0x62, 0x63, 0x42, 0x07, 0x01 ];
+    let mut cpu = cpu::Cpu::new(code);
+    cpu.run();
+}

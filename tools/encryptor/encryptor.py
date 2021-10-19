@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
     if not os.path.isfile(os.path.join(os.path.dirname(sys.argv[0]), "tool.mp3")):
         os.system("youtube-dl --extract-audio --audio-format mp3 https://www.youtube.com/watch?v=Y7JG63IuaWs")
-        os.system("mv *.mp3 tool.mp3")
+        os.system(f"mv *.mp3 {os.path.join(os.path.dirname(sys.argv[0]), 'tool.mp3')}")
 
     with open(sys.argv[1], "rb") as f:
         bytecode = bytearray(f.read())
@@ -28,7 +28,7 @@ if __name__ == "__main__":
     with open(os.path.join(os.path.dirname(sys.argv[0]), "tool.mp3"), "rb") as f:
         raw_mp3 = bytearray(f.read())
 
-    with open("elf.h", "w") as f:
+    with open("code.h", "w") as f:
         result += raw_mp3
 
         for index, byte in enumerate(bytecode):

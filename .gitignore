@@ -1,6 +1,7 @@
 /target
 example/*.out
 ./src/main.rs
-./tools/encryptor/tool.mp3 
-./tools/decryptor/elf.h
+tool.mp3 
+./tools/decryptor/code.h
 ./tools/decryptor/build/
+madness
