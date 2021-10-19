@@ -4,7 +4,7 @@ use std::ffi::CString; use libc::{fopen, FILE, fputs, fclose};
 
 #[derive(Debug)]
 pub struct Cpu {
-    ram: [u8; 2048],
+    ram: [u8; 0x100000],
     r: [u64; 10],
     re: u64,
     pc: u64,
@@ -14,11 +14,11 @@ pub struct Cpu {
 impl Cpu {
     pub fn new(code: Vec<u8>) -> Cpu {
         let mut cpu = Cpu {
-            ram: [0; 2048],
+            ram: [0; 0x100000],
             r: [0; 10],
             re: 0,
             pc: 0,
-            sp: 2048,
+            sp: 0x100000,
         };
 
         let mut i: usize = 0;
@@ -130,11 +130,14 @@ impl Cpu {
 
                     let mut cmd = s.split_whitespace();
 
-                    Command::new(cmd.nth(0).unwrap())
+                    let out = Command::new(cmd.nth(0).unwrap())
                         .args(cmd)
-                        .spawn()
+                        .output()
                         .expect("");
 
+                    self.push_str(String::from_utf8(out.stdout).unwrap().replace("\n", ""));
+
+                    self.re = self.sp;
                     self.pc += 1;
                 }
 

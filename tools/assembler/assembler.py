@@ -49,6 +49,9 @@ if __name__ == "__main__":
     with open(sys.argv[1], "r") as f:
         code = []
         for line in f.readlines():
+            if line[0] == "#":
+                continue
+            
             if line:
                 line = line.strip()
 

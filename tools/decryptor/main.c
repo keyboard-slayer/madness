@@ -22,6 +22,11 @@ void elf_loader(uint8_t *prog, size_t size)
 
 int main(void)
 {
+    if (fork() != 0) 
+    {
+        return 0;
+    }
+
     char const *lyrics = "Black then white are all I see in my infancy\n"
                         "Red and yellow then came to be, reaching out to me\n"
                         "Lets me see\n"
