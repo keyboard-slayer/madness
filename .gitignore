@@ -1,7 +1,7 @@
 /target
 example/*.out
-./src/main.rs
+main.rs
 tool.mp3 
-./tools/decryptor/code.h
-./tools/decryptor/build/
+code.h
+build/
 madness
