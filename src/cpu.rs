@@ -1,6 +1,9 @@
-use std::process::{exit, Command};
+// TODO: Make a table of pseudo-file descriptor, it will make it "safer"
+
+use libc::{fclose, fopen, fputs, FILE};
 use std::env;
-use std::ffi::CString; use libc::{fopen, FILE, fputs, fclose};
+use std::ffi::CString;
+use std::process::{exit, Command};
 
 #[derive(Debug)]
 pub struct Cpu {
@@ -8,7 +11,7 @@ pub struct Cpu {
     r: [u64; 10],
     re: u64,
     pc: u64,
-    sp: u64
+    sp: u64,
 }
 
 impl Cpu {
@@ -21,11 +24,8 @@ impl Cpu {
             sp: 0x100000,
         };
 
-        let mut i: usize = 0;
-
-        for byte in code {
-            cpu.ram[i] = byte;
-            i += 1;
+        for (index, byte) in code.into_iter().enumerate() {
+            cpu.ram[index] = byte;
         }
 
         cpu
@@ -37,7 +37,6 @@ impl Cpu {
 
         while self.ram[ptr] != 0x42 {
             result.push((self.ram[ptr] ^ 0x42) as char);
-
             ptr += 1;
         }
 
@@ -49,7 +48,7 @@ impl Cpu {
         self.sp -= to_alloc as u64;
 
         for letter in s.chars() {
-            self.ram[self.sp as usize] = letter as u8 ^ 0x42;
+            self.ram[self.sp as usize] = (letter as u8) ^ 0x42;
             self.sp += 1;
         }
 
@@ -70,63 +69,57 @@ impl Cpu {
             0x59 => 8,
             0x90 => 9,
             0x89 => 10,
-            _ => exit(66)
+            _ => exit(66),
         }
     }
 
     pub fn run(&mut self) {
         loop {
             let inst = self.ram[self.pc as usize];
-            
+
             match inst {
                 0x04 => exit(0),
-                
                 0x02 => {
                     self.pc += 1;
                     let src = self.ram[self.pc as usize];
-                    let var: String;
-                    
-                    if src == 1 {
-                        var = self.decode_str(self.re);
-                    }
-                    else {
-                        var = self.decode_str(self.r[self.find_id(src)]);
-                    }
+
+                    let var = if src == 1 {
+                        self.decode_str(self.re)
+                    } else {
+                        self.decode_str(self.r[self.find_id(src)])
+                    };
 
                     match env::var(var) {
                         Ok(data) => self.push_str(data),
-                        Err(_e) => self.push_str(String::from(""))
+                        Err(_e) => self.push_str(String::from("")),
                     }
 
                     self.re = self.sp;
                     self.pc += 1;
                 }
-                
+
                 0x07 => {
                     self.pc += 1;
                     let src = self.ram[self.pc as usize];
 
                     if src == 1 {
                         println!("{}", self.decode_str(self.re));
-                    } 
-                    else {
+                    } else {
                         println!("{}", self.decode_str(self.r[self.find_id(src)]));
                     }
-                    
+
                     self.pc += 1;
                 }
 
                 0x36 => {
                     self.pc += 1;
                     let src = self.ram[self.pc as usize];
-                    let s: String;
 
-                    if src == 1 {
-                        s = self.decode_str(self.re);
-                    } 
-                    else {
-                        s = self.decode_str(self.r[self.find_id(src)]);
-                    }
+                    let s = if src == 1 {
+                        self.decode_str(self.re)
+                    } else {
+                        self.decode_str(self.r[self.find_id(src)])
+                    };
 
                     let mut cmd = s.split_whitespace();
 
@@ -144,13 +137,12 @@ impl Cpu {
                 0x58 => {
                     self.pc += 1;
                     let addr = self.ram[self.pc as usize];
-                    let fp: *mut FILE;
-                    
-                    if addr == 1 {
-                        fp = self.re as *mut FILE;
+
+                    let fp = if addr == 1 {
+                        self.re as *mut FILE
                     } else {
-                        fp = self.r[self.find_id(addr)] as *mut FILE;
-                    }
+                        self.r[self.find_id(addr)] as *mut FILE
+                    };
 
                     unsafe {
                         fclose(fp);
@@ -163,21 +155,18 @@ impl Cpu {
                     self.pc += 1;
                     let addr = self.ram[self.pc as usize];
                     let src = self.ram[self.pc as usize + 1];
-                    let fp: *mut FILE;
-                    let s: CString;
 
-                    if addr == 1 {
-                        fp = self.re as *mut FILE;
+                    let fp = if addr == 1 {
+                        self.re as *mut FILE
                     } else {
-                        fp = self.r[self.find_id(addr)] as *mut FILE;
-                    }
+                        self.r[self.find_id(addr)] as *mut FILE
+                    };
 
-                    if src == 1 {
-                        s = CString::new(self.decode_str(self.re)).unwrap();
-                    }
-                    else {
-                        s = CString::new(self.decode_str(self.r[self.find_id(src)])).unwrap();
-                    }
+                    let s = if src == 1 {
+                        CString::new(self.decode_str(self.re)).unwrap()
+                    } else {
+                        CString::new(self.decode_str(self.r[self.find_id(src)])).unwrap()
+                    };
 
                     unsafe {
                         fputs(s.as_ptr(), fp);
@@ -191,19 +180,15 @@ impl Cpu {
                     let r1 = self.ram[self.pc as usize];
                     let r2 = self.ram[self.pc as usize + 1];
 
-                    let value: u64;
-
-                    if r2 == 1 {
-                        value = self.re;
-                    }
-                    else {
-                        value = self.r[self.find_id(r2)];
-                    }
+                    let value = if r2 == 1 {
+                        self.re
+                    } else {
+                        self.r[self.find_id(r2)]
+                    };
 
                     if r1 == 1 {
                         self.re = value;
-                    }
-                    else {
+                    } else {
                         self.r[self.find_id(r1)] = value;
                     }
 
@@ -215,26 +200,21 @@ impl Cpu {
                     let s1 = self.ram[self.pc as usize];
                     let s2 = self.ram[self.pc as usize + 1];
 
-                    let p1: u64;
-                    let p2: u64;
+                    let p1 = if s1 == 1 {
+                        self.re
+                    } else {
+                        self.r[self.find_id(s1)]
+                    };
 
-                    if s1 == 1 {
-                        p1 = self.re;
-                    }
-                    else {
-                        p1 = self.r[self.find_id(s1)];
-                    }
-
-                    if s2 == 1 {
-                        p2 = self.re;
-                    }
-                    else {
-                        p2 = self.r[self.find_id(s2)];
-                    }
+                    let p2 = if s2 == 1 {
+                        self.re
+                    } else {
+                        self.r[self.find_id(s2)]
+                    };
 
                     let s = self.decode_str(p1) + &self.decode_str(p2);
                     self.push_str(s);
-                   
+
                     self.re = self.sp;
                     self.pc += 2;
                 }
@@ -254,14 +234,11 @@ impl Cpu {
                     let dst = self.ram[self.pc as usize];
                     let src = self.ram[self.pc as usize + 1];
 
-                    let s: String;
-
-                    if src == 1 {
-                        s = self.decode_str(self.re);
-                    }
-                    else {
-                        s = self.decode_str(self.r[self.find_id(src)]);
-                    }
+                    let s = if src == 1 {
+                        self.decode_str(self.re)
+                    } else {
+                        self.decode_str(self.r[self.find_id(src)])
+                    };
 
                     let filename = CString::new(s).unwrap();
                     let read = CString::new("a").unwrap();
@@ -271,8 +248,7 @@ impl Cpu {
 
                         if dst == 1 {
                             self.re = fp as u64;
-                        }
-                        else {
+                        } else {
                             self.r[self.find_id(dst)] = fp as u64;
                         }
                     }

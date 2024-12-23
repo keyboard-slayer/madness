@@ -38,11 +38,12 @@ if __name__ == "__main__":
 
     with (Path.cwd() / "code.h").open("w") as f:
         f.write(f"#pragma once\n\n#include <stdint.h>\n#define STOP 0x{len(raw_mp3):x}\n#define LENGTH 0x{len(result):x}\n\nuint8_t opcode[0x{len(result):x}] = {{\n    ")
+        lastIndex = 0
 
         for index, byte in enumerate(result):
-            if (index+1) % 20 == 0:
-                f.write(f"0x{byte:02x},\n    ")
-            elif index == len(result) - 1:
+            if index == len(result) - 1:
                 f.write(f"0x{byte:02x}}};")
+            elif (index+1) % 20 == 0:
+                f.write(f"0x{byte:02x},\n    ")
             else:
                 f.write(f"0x{byte:02x}, ")

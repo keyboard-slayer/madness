@@ -23,6 +23,7 @@ CFLAGS += 					\
 	-Wextra					\
 
 LDFLAGS += 					\
+	-static					\
 
 DIRECTORY_GUARD=@mkdir -p $(@D)
 BUILD_DIRECTORY ?= build
@@ -32,22 +33,21 @@ SRCS   		= $(wildcard *.c)
 OBJS   		= $(patsubst %.c, $(BUILD_DIRECTORY)/%.c.o, $(SRCS))
 
 $(BUILD_DIRECTORY)/%.c.o: %.c
-	$(DIRECTORY_GUARD)
-	$(CC) $(CFLAGS) -c -o $@ $<
+	@$(DIRECTORY_GUARD)
+	@$(CC) $(CFLAGS) -c -o $@ $<
 
 $(TARGET): $(OBJS)
-	$(DIRECTORY_GUARD)
-	$(CC) $^ $(LDFLAGS) -o $@
+	@$(DIRECTORY_GUARD)
+	@$(CC) $^ $(LDFLAGS) -o $@
 
 .PHONY: all
 all: $(TARGET)
 
 .PHONY: clean
 clean:
-	rm -r build
-	-rm $(TARGET)
+	@rm -r build
 
 .PHONY: test
 test: $(TEST_OBJS)
-	$(CC) -o $@ $^ $(LDFLAGS)
+	@$(CC) -o $@ $^ $(LDFLAGS)
 	@./$@
