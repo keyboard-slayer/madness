@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import re
 import sys
 from typing import List
 
@@ -49,34 +50,38 @@ if __name__ == "__main__":
     with open(sys.argv[1], "r") as f:
         code = []
         for line in f.readlines():
-            if line[0] == "#":
-                continue
-            
-            if line:
-                line = line.strip()
+            if line.startswith("#"):
+               continue
 
-                for index, arg in enumerate(line.split()):
-                    if arg[0] == "\"":
-                        s = " ".join(line.split()[index:])
-                        if s[0] == "\"" and s[-1] == "\"":
-                            code += obfuscate_string(s[1:-1])
-                            break
-                        else:
-                            sys.stderr.write("String error")
-                            exit(1)
-                    
-                    elif arg in inst:
-                        code.append(inst[arg])
-                    
-                    elif arg in registers:
-                        code.append(registers[arg])
-                    
-                    else:
-                        print(arg)
-                        sys.stderr.write("Syntax error\n")
+            if len(line) == 0:
+                continue
+
+            line = line.strip()
+
+            for index, arg in enumerate(line.split()):
+                if arg.startswith("\""):
+                    s = " ".join(line.split()[index:])
+
+                    if not s.startswith("\"") and s.endswith("\""):
+                        sys.stderr.write("String error")
                         exit(1)
 
-    with open("./main.rs", "w") as f:
-        f.write("mod cpu;\n\nfn main(){\n    let code: Vec<u8> = vec![ %s ];\n    let mut cpu = cpu::Cpu::new(code);\n    cpu.run();\n}" % (", ".join(["0x%02x" % x for x in code])))
+                    code += obfuscate_string(s[1:-1])
+                    break
+                elif arg in inst:
+                    code.append(inst[arg])
+                elif arg in registers:
+                    code.append(registers[arg])
+                else:
+                    print(arg)
+                    sys.stderr.write("Syntax error\n")
+                    exit(1)
 
-    print(f"The code is {len(code)} byte long")
+    with open("./main.rs", "w") as f:
+        f.write(f"""mod cpu;
+fn main() {{
+    let code: Vec<u8> = vec![ {", ".join([f"0x{x:02x}" for x in code])} ];
+    let mut cpu = cpu::Cpu::new(code);
+    cpu.run();
+}}
+""")
